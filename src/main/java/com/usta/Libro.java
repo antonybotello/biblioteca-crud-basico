@@ -4,8 +4,9 @@ public class Libro {
     private String autor;
     private String genero;
     private String isbn;
-
     
+    public Libro() {
+    }
     public Libro(String nombre, String autor, String genero, String isbn) {
         this.nombre = nombre;
         this.autor = autor;
@@ -36,9 +37,9 @@ public class Libro {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-    @Override
-    public String toString() {
-        return nombre;
-    }
+    
+
+    
+    
     
 }
