@@ -20,7 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EliminarController {
-
+    private String filePath = "src/main/resources/com/usta/data/libros.txt";
     public ObservableList<Libro> libroOL = FXCollections.observableArrayList();
     public List<Libro> libroList = new ArrayList<>();
 
@@ -54,7 +54,8 @@ public class EliminarController {
     }
 
     @FXML
-    public void ventana() {
+    public void ventanaEliminar() throws IOException {
+        setLibroAEditar();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
         alert.setHeaderText("¿Estás seguro de que deseas eliminar el libro " + libroAEliminar.getNombre() + "?");
@@ -65,17 +66,26 @@ public class EliminarController {
             // Aquí puedes incluir la lógica para eliminar el libro si el usuario confirma
             // Por ejemplo, puedes llamar a un método para eliminar el libro de la lista y
             // actualizar la tabla
-            eliminarLibro(libroAEliminar);
+            eliminarLibro();
         }
     }
+    public void ventanaExito(String nombre) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Éxito!");
+        alert.setHeaderText(nombre);
+        alert.setContentText("Puedes verificar en la sección de listar.");
 
-    public void eliminarLibro(Libro libro) {
+        // Mostrar la ventana emergente y esperar a que el usuario la cierre
+        alert.showAndWait();
+        libroOL.setAll(libroList);
+        libroTable.setItems(libroOL);
+    }
+
+    public void eliminarLibro() throws IOException {
         // Archivo original y archivo temporal para escribir los cambios
-        String filePath = "src/main/resources/com/usta/data/libros.txt";
-        String tempFilePath = "src/main/resources/com/usta/data/libros_temp.txt";
-
+       
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFilePath))) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + ".tmp"))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -83,7 +93,7 @@ public class EliminarController {
                 String[] parts = line.split("\\|");
                 // Si el ISBN de la línea coincide con el ISBN del libro a eliminar, no escribas
                 // esa línea en el archivo temporal
-                if (parts.length == 4 && parts[3].equals(libro.getIsbn())) {
+                if (parts.length == 4 && parts[3].equals(libroAEliminar.getIsbn())) {
                     continue;
                 }
                 // Escribe la línea en el archivo temporal si no coincide con el ISBN del libro
@@ -102,20 +112,15 @@ public class EliminarController {
         if (file.delete()) {
             // Intentar renombrar el archivo temporal
             if (tempFile.renameTo(file)) {
-                // Mostrar ventana de éxito
-                
+                ventanaExito("La eliminación del libro " + libroAEliminar.getNombre() + " se ha realizado correctamente.");
+                switchToEliminar();
             } else {
                 System.out.println("No se pudo renombrar el archivo temporal.");
             }
         } else {
             System.out.println("No se pudo eliminar el archivo original.");
         }
-        if (tempFile.renameTo(file)) {
-            // Mostrar ventana de éxito
-            
-        } else {
-            System.out.println("No se pudo reemplazar el archivo original con el temporal.");
-        }
+      
     }
 
     private void cargarLibros() {

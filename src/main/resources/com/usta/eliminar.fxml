@@ -85,7 +85,7 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="fondo" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="libroTable" layoutX="45.0" layoutY="81.0" onMouseClicked="#ventana" prefHeight="271.0" prefWidth="399.0">
+            <TableView fx:id="libroTable" layoutX="45.0" layoutY="81.0" onMouseClicked="#ventanaEliminar" prefHeight="271.0" prefWidth="399.0">
               <columns>
                 <TableColumn fx:id="nombreCol" prefWidth="75.0" text="Nombre" />
                 <TableColumn fx:id="autorCol" prefWidth="75.0" text="Autor" />
