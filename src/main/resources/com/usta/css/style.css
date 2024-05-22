@@ -1,0 +1,20 @@
+.fondo {
+    -fx-background-image: url('../img/fondo.png');
+    -fx-background-size: 100% 100%; /* Ajusta el tamaño de la imagen al tamaño del VBox */
+    -fx-background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    
+}
+.fondo-boton {
+    -fx-background-image: url('../img/fondo-boton.png');
+    -fx-background-size: 100% 100%; /* Ajusta el tamaño de la imagen al tamaño del VBox */
+    -fx-background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    
+}
+.transparencia {
+    -fx-background-color: rgba(255, 255, 255, 0.5); /* Color blanco con 80% de transparencia */
+}
+
+.recuadro{
+    -fx-background-radius: 20px; /* Radio de borde para el fondo */
+    -fx-background-color: rgba(138, 43, 226,0.8);
+}
