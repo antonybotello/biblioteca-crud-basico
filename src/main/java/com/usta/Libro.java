@@ -39,7 +39,10 @@ public class Libro {
     }
     
 
-    
+    @Override
+    public String toString() {
+        return nombre + "|" + autor + "|" + genero + "|" + isbn;
+    }
     
     
 }

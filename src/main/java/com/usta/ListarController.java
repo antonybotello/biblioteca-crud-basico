@@ -1,5 +1,8 @@
 package com.usta;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +35,34 @@ public class ListarController {
         autorCol.setCellValueFactory(new PropertyValueFactory<>("autor"));
         generoCol.setCellValueFactory(new PropertyValueFactory<>("genero"));
         isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        cargarLibros();
 
-        Libro nuevoLibro= new Libro("Programación Básica","Antony Botello","Terror","1q2w3e4r");
-        libroList.add( nuevoLibro);
         libroOL.setAll(libroList);
         libroTable.setItems(libroOL);
          
 
+    }
+     private void cargarLibros() {
+        String directoryPath = "src\\main\\resources\\com\\usta\\data";
+        String filePath = directoryPath+ File.separator + "libros.txt";
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length == 4) {
+                        Libro libro = new Libro(parts[0], parts[1], parts[2], parts[3]);
+                        libroList.add(libro);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("File not found: " + filePath);
+        }
     }
 
     @FXML
