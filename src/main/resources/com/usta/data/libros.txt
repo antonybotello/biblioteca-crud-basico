@@ -1,4 +1,5 @@
-asd|sda|Drama|sd
-asd|asd|Terror|sd
-antony|botello|Acción|213132
-antony|botello|Acción|21313
+Harry Potter|J.K. Rowling|Fantasía|9788498387087
+Cien años de soledad|Gabriel García Márquez|Realismo mágico|9780307350386
+El código Da Vinci|Dan Brown|Suspense|9780307474278
+El hobbit|J.R.R. Tolkien|Fantasía|9780547928227
+1984|George Orwell|Ciencia ficción distópica|9780547249643

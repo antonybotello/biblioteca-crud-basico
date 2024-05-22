@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EditarController {
+    private String filePath = "src/main/resources/com/usta/data/libros.txt";
 
     public ObservableList<Libro> libroOL = FXCollections.observableArrayList();
     public List<Libro> libroList = new ArrayList<>();
@@ -156,11 +157,10 @@ public class EditarController {
     }
 
     private void actualizarArchivo() {
-        String filePath = "src/main/resources/com/usta/data/libros.txt";
-    
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath));
                 BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + ".tmp"))) {
-    
+
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -176,10 +176,22 @@ public class EditarController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    
+
+        
         // Reemplazar el archivo original con el temporal
         File file = new File(filePath);
         File tempFile = new File(filePath + ".tmp");
+        if (file.delete()) {
+            // Intentar renombrar el archivo temporal
+            if (tempFile.renameTo(file)) {
+                // Mostrar ventana de éxito
+                ventana("La edición del libro " + libroAEditar.getNombre() + " se ha guardado correctamente.");
+            } else {
+                System.out.println("No se pudo renombrar el archivo temporal.");
+            }
+        } else {
+            System.out.println("No se pudo eliminar el archivo original.");
+        }
         if (tempFile.renameTo(file)) {
             // Mostrar ventana de éxito
             ventana("La edición del libro " + libroAEditar.getNombre() + " se ha guardado correctamente.");
